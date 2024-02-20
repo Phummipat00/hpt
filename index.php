@@ -34,8 +34,8 @@
                     </thead>
                     <tbody>
                         <?php
-                            require "conn.php";
-                        $query =  "SELECT queue.QDate, queue.QNumber,patient.Pname,patient.Pgender,patient.image,queue.QStatus
+                        require "conn.php";
+                        $query =  "SELECT *
                         FROM queue
                         INNER JOIN patient ON queue.Pid=patient.Pid;";
                         $stmt = $conn->prepare($query);
@@ -43,7 +43,7 @@
                         $result = $stmt->fetchAll();
                         foreach ($result as $r) { ?>
 
-<tr>
+                            <tr>
                                 <td><?= $r['QDate'] ?></td>
                                 <td><?= $r['QNumber'] ?></td>
                                 <td><?= $r['Pname'] ?></td>
@@ -51,8 +51,8 @@
                                 <td><?= $r['QStatus'] ?></td>
                                 <td><img src="./picture/<?= $r['image']; ?>" width="50px" height="50" alt="image" onclick="enlargeImg()" id="img1"></td>
 
-                                <td><a href="UpdateQueueForm.php?QNumber=<?= $r['QNumber'] ?>" class="btn btn-warning btn-sm">แก้ไข</a></td>
-                                <td><a href="DeleteQueue.php?QNumber=<?= $r['QNumber'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบข้อมูล !!');">ลบ</a></td>
+                                <td><a href="UpdateQueueForm.php?QNumber=<?= $r['QNumber'] ?>&&QDate=<?= $r['QDate'] ?>" class="btn btn-warning btn-sm">แก้ไข</a></td>
+                                <td><a href="DeleteQueue.php?Pid=<?= $r['Pid'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบข้อมูล !!');">ลบ</a></td>
                             </tr>
                         <?php }
                         ?>
@@ -66,11 +66,11 @@
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>
-      $(document).ready(function() {
-           var inputvalues = $('#customerTable').DataTable();
-           $('#customerTable').on('keyup',function(){
-            inputvalues.search(this.value).draw()
-           } )
+        $(document).ready(function() {
+            var inputvalues = $('#customerTable').DataTable();
+            $('#customerTable').on('keyup', function() {
+                inputvalues.search(this.value).draw()
+            })
         });
     </script>
 </body>

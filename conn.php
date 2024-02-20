@@ -6,7 +6,7 @@ $uPass = "";
 $db = "hpt";
 
 try {
-    $conn = new PDO("mysql:host=$sName;dbname=$db", $uName, $uPass);
+    $conn = new PDO("mysql:host=$sName;dbname=$db;charset=UTF8", $uName, $uPass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Sorry! You cannot connect to database";

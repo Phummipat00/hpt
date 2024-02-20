@@ -15,13 +15,14 @@
     require 'conn.php';
 
     if (isset($_GET['QDate'], $_GET['QNumber'])) {
-        $query_select = 'SELECT * FROM queue WHERE QDate=? and QNumber=?';
+        $query_select = 'SELECT * FROM queue WHERE QDate=:QDate and QNumber=:QNumber';
         $stmt = $conn->prepare($query_select);
-        $params = array($_GET['QDate'], $_GET['QNumber']);
-        $stmt->execute($params);
+        $stmt->bindParam(':QDate', $_GET['QDate']);
+        $stmt->bindParam(':QNumber', $_GET['QNumber']);
+        $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     ?>
 
 

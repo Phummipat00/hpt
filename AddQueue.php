@@ -25,15 +25,17 @@
     <?php
     require 'conn.php';
 
-    if (isset($_POST[''])) {
-        if (!empty($_POST['']) && !empty($_POST[''])) {
+    if (isset($_POST['submit'])) {
+        if (!empty($_POST['Pid']) && !empty($_POST['QDate'])) {
+            $Qstatus = "รอเข้ารับการรักษา";
+
+            $sql = "INSERT into queue values (:QDate,:QNumber,:Pid,:QStatus)";
 
             $stmt = $conn->prepare($sql);
-            $sql = "   ";
-
             $stmt->bindParam(':QDate', $_POST['QDate']);
             $stmt->bindParam(':QNumber', $_POST['QNumber']);
             $stmt->bindParam(':Pid', $_POST['Pid']);
+            $stmt->bindParam(':QStatus', $Qstatus);
 
             echo '
                 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -41,7 +43,7 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
 
             try {
-                if () :
+                if ($stmt->execute()) :
                     echo '
                         <script type="text/javascript">        
                         $(document).ready(function(){
@@ -77,12 +79,12 @@
             <div class="col-md-4"> <br>
                 <h3>ฟอร์มเพิ่มข้อมูลคิว</h3>
                 <br><br>
-                <form action="" method="">
-                    <input type="" placeholder="วันที่" name="" class="form-control" required>
+                <form action="AddQueue.php" method="Post">
+                    <input type="date" placeholder="วันที่" name="QDate" class="form-control" required>
                     <br>
-                    <input type="" placeholder="หมายเลขคิว" name="" class="form-control" required>
+                    <input type="text" placeholder="หมายเลขคิว" name="QNumber" class="form-control" required>
                     <br>
-                    <input type="text" placeholder="รหัสบัตรประชาชน" class="form-control" name="">
+                    <input type="text" placeholder="รหัสบัตรประชาชน" class="form-control" name="Pid">
                     <br>
                     <input type="submit" value="Submit" name="submit" class="btn btn-primary" />
                 </form>
